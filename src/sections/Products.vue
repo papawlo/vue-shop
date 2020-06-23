@@ -48,7 +48,7 @@
 
 <script>
 export default {
-  name: "Products",
+  name: "SectionProducts",
   props: {
     msg: String
   }

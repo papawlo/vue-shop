@@ -66,7 +66,7 @@
               </router-link>
             </li>
             <li>
-              <router-link to="products">
+              <router-link to="/admin/products">
                 <i>
                   <font-awesome-icon icon="barcode" />
                 </i>
