@@ -3,7 +3,10 @@ import App from './App.vue'
 import router from './router'
 import jQuery from 'jquery'
 import firebase from 'firebase'
+import VueFirestore from 'vue-firestore'
 require('firebase/firestore')
+
+Vue.use(VueFirestore)
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCircle, faTimes, faBars, faTachometerAlt, faShoppingCart, faGem, faChartLine, faGlobe, faBook, faCalendar, faFolder, faThumbtack, faPowerOff, faBarcode } from '@fortawesome/free-solid-svg-icons'
@@ -24,13 +27,6 @@ import './assets/app.scss'
 
 // Vue.component('NavBar', require('./components/NavBar.vue').default)
 Vue.config.productionTip = false
-
-// new Vue({
-//   router,
-//   render: h => h(App)
-// }).$mount('#app')
-
-
 
 let app = '';
 
