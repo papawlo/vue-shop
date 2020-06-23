@@ -1,10 +1,12 @@
+import './jquery'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import jQuery from 'jquery'
+// import jQuery from 'jquery'
 import firebase from 'firebase'
 import VueFirestore from 'vue-firestore'
 require('firebase/firestore')
+// import Swal from 'sweetalert2'
 
 Vue.use(VueFirestore)
 
@@ -18,7 +20,17 @@ library.add(faCircle, faTimes, faBars, faTachometerAlt, faShoppingCart, faGem, f
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-window.$ = window.jQuery = jQuery
+// window.$ = window.jQuery = jQuery
+// window.Swal = Swal;
+
+// const Toast = Swal.mixin({
+//   toast: true,
+//   position: 'top-end',
+//   showConfirmButton: false,
+//   timer: 3000
+// });
+
+// window.Toast = Toast;
 
 import 'popper.js'
 import 'bootstrap'

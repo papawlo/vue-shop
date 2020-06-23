@@ -53,7 +53,7 @@
                   data-target="#productModal"
                 >Edit</button>
 
-                <button @click="deleteProduct(product.id)" class="btn btn-danger ml-3">Delete</button>
+                <button @click="deleteProduct(product)" class="btn btn-danger ml-3">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -77,7 +77,13 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="productModalLabel">Edit Product</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button
+                @click="closeModal"
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -133,7 +139,19 @@
 <script>
 import firebase from "firebase";
 import jQuery from "jquery";
+import Swal from "sweetalert2";
 var db = firebase.firestore();
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  onOpen: toast => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  }
+});
 
 export default {
   name: "AdminProducts",
@@ -186,8 +204,28 @@ export default {
     // this.activeItem = product.id;
     // console.log(product);
     // },
-    deleteProduct(id) {
-      console.log(id);
+    deleteProduct(product) {
+      console.log(product[".key"]);
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          this.$firestore.products.doc(product[".key"]).delete();
+          Toast.fire({
+            type: "success",
+            title: "Deleted  successfully"
+          });
+        }
+      });
+      // if (confirm("Are yoou sure?")) {
+      // this.$firestore.persons.doc(person['.key']).delete()
+      // }
       // if (confirm("Are yoou sure?")) {
       //   db.collection("products")
       //     .doc(id)
