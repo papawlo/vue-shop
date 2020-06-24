@@ -1,8 +1,9 @@
 import firebase from "firebase/app";
 import "firebase/auth";
-// import "firebase/firebase-firestore";
+import "firebase/firestore";
+import "firebase/storage";
 /* Import the firebase SDK and extend with firestore */
-require('firebase/firestore');
+// require('firebase/firestore');
 
 
 // Your web app's Firebase configuration

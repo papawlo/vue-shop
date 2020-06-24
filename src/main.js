@@ -6,9 +6,12 @@ import router from './router'
 import firebase from 'firebase'
 import VueFirestore from 'vue-firestore'
 require('firebase/firestore')
-// import Swal from 'sweetalert2'
 
-Vue.use(VueFirestore)
+
+Vue.use(VueFirestore, {
+  key: 'id',         // the name of the property. Default is '.key'.
+  enumerable: true  //  whether it is enumerable or not. Default is true.
+})
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCircle, faTimes, faBars, faTachometerAlt, faShoppingCart, faGem, faChartLine, faGlobe, faBook, faCalendar, faFolder, faThumbtack, faPowerOff, faBarcode } from '@fortawesome/free-solid-svg-icons'
