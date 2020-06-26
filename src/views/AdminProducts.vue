@@ -125,6 +125,13 @@
                   v-model="tag"
                   class="form-control"
                 />
+                <div class="d-flex mt-3">
+                  <span
+                    v-for="(tag, index) in product.tags"
+                    :key="index"
+                    class="badge badge-pill badge-primary mr-2"
+                  >{{tag}}</span>
+                </div>
               </div>
 
               <div class="form-group">
@@ -143,8 +150,11 @@
                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                   </div>
                 </div>
-
-                <img :src="product.images" alt="sem alt" class="img-thumbnail w-25" />
+              </div>
+              <div class="form-group d-flex">
+                <div v-for="(image, index) in product.images" :key="index">
+                  <img :src="image" alt="sem alt" class="img-thumbnail w-25" />
+                </div>
               </div>
             </div>
             <!--modal body -->
@@ -212,7 +222,7 @@ export default {
         description: null,
         price: null,
         tags: [],
-        images: null
+        images: []
       },
       tag: null,
       activeItem: null,
@@ -231,43 +241,45 @@ export default {
   },
   methods: {
     uploadImage(e) {
-      console.log(e.target.files[0]);
-      let file = e.target.files[0];
-      var storageRef = firebase.storage().ref("products/" + file.name);
-      let uploadTask = storageRef.put(file);
-      // Register three observers:
-      // 1. 'state_changed' observer, called any time the state changes
-      // 2. Error observer, called on failure
-      // 3. Completion observer, called on successful completion
-      uploadTask.on(
-        "state_changed",
-        snapshot => {
-          // Observe state change events such as progress, pause, and resume
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          var progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case firebase.storage.TaskState.PAUSED: // or 'paused'
-              console.log("Upload is paused");
-              break;
-            case firebase.storage.TaskState.RUNNING: // or 'running'
-              console.log("Upload is running");
-              break;
+      if (e.target.files[0]) {
+        console.log(e.target.files[0]);
+        let file = e.target.files[0];
+        var storageRef = firebase.storage().ref("products/" + file.name);
+        let uploadTask = storageRef.put(file);
+        // Register three observers:
+        // 1. 'state_changed' observer, called any time the state changes
+        // 2. Error observer, called on failure
+        // 3. Completion observer, called on successful completion
+        uploadTask.on(
+          "state_changed",
+          snapshot => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log("Upload is paused");
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log("Upload is running");
+                break;
+            }
+          },
+          error => {
+            console.log(error);
+          },
+          () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+              this.product.images.push(downloadURL);
+              console.log("File available at", downloadURL);
+            });
           }
-        },
-        error => {
-          console.log(error);
-        },
-        () => {
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-            this.product.images = downloadURL;
-            console.log("File available at", downloadURL);
-          });
-        }
-      );
+        );
+      }
 
       // service firebase.storage {
       //   match /b/{bucket}/o {
@@ -279,8 +291,10 @@ export default {
     },
     addTag() {
       console.log("entrou");
-
-      this.product.tags.push(this.tag.slice(0, -1));
+      if (this.tag != "") {
+        this.tag.trim();
+        this.product.tags.push(this.tag.slice(0, -1));
+      }
       this.tag = "";
     },
     openModal() {
