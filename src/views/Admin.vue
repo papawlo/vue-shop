@@ -83,6 +83,15 @@
               </router-link>
             </li>
             <li>
+              <router-link to="/admin/profile">
+                <i>
+                  <font-awesome-icon icon="user" />
+                </i>
+                <span class="menu-text">Profile</span>
+              </router-link>
+            </li>
+
+            <li>
               <button type="button" @click="logout">
                 <i>
                   <font-awesome-icon icon="power-off" />

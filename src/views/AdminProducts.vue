@@ -43,7 +43,7 @@
           </thead>
           <tbody>
             <tr v-for="(product,index) in products" :key="index">
-              <th scope="row">{{index}}</th>
+              <th scope="row">{{index+1}}</th>
               <td>{{product.name}}</td>
               <td>{{product.price}}</td>
               <td>
@@ -151,9 +151,21 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group d-flex">
-                <div v-for="(image, index) in product.images" :key="index">
-                  <img :src="image" alt="sem alt" class="img-thumbnail w-25" />
+              <div class="form-group">
+                <div class="row justify-content-start">
+                  <div v-for="(image, index) in product.images" :key="index" class="col">
+                    <div class="img-wrap">
+                      <img :src="image" alt="sem alt" class="img-thumbnail w-25" />
+                      <button
+                        @click="deleteImage(image, index)"
+                        type="button"
+                        class="close delete-img bg-danger"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <!-- <span class="delete-img" @click="deleteImage(image, index)"></span> -->
+                  </div>
                 </div>
               </div>
             </div>
@@ -240,6 +252,18 @@ export default {
     };
   },
   methods: {
+    deleteImage(img, index) {
+      let image = firebase.storage().refFromURL(img);
+      this.product.images.splice(index, 1);
+      image
+        .delete()
+        .then(() => {
+          console.log("image deleted");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     uploadImage(e) {
       if (e.target.files[0]) {
         console.log(e.target.files[0]);
@@ -280,14 +304,6 @@ export default {
           }
         );
       }
-
-      // service firebase.storage {
-      //   match /b/{bucket}/o {
-      //     match /{allPaths=**} {
-      //       allow read, write: if request.auth != null;
-      //     }
-      //   }
-      // }
     },
     addTag() {
       console.log("entrou");
@@ -340,6 +356,10 @@ export default {
         confirmButtonText: "Yes, delete it!"
       }).then(result => {
         if (result.value) {
+          this.product.images.forEach((image, index) => {
+            this.deleteImage(image, index);
+          });
+
           this.$firestore.products.doc(product.id).delete();
           Toast.fire({
             icon: "success",
@@ -400,8 +420,7 @@ export default {
       this.product.description = null;
       this.product.price = null;
       this.product.tags = [];
-      this.product.images = null;
-      this.activeItem = this.modalType = null;
+      this.product.images = [];
     }
   },
   created() {
@@ -414,6 +433,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang='scss'>
 .ql-editor {
-  min-height: 10px;
+  min-height: 100px !important;
+}
+
+.img-wrap {
+  position: relative;
+  & .delete-img {
+    position: absolute;
+    top: -11px;
+    left: 62px;
+  }
 }
 </style>

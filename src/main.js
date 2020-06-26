@@ -14,12 +14,12 @@ Vue.use(VueFirestore, {
 })
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCircle, faTimes, faBars, faTachometerAlt, faShoppingCart, faGem, faChartLine, faGlobe, faBook, faCalendar, faFolder, faThumbtack, faPowerOff, faBarcode } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faTimes, faBars, faTachometerAlt, faShoppingCart, faGem, faChartLine, faGlobe, faBook, faCalendar, faFolder, faThumbtack, faPowerOff, faBarcode, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTwitter, faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 
 library.add(faTwitter, faInstagram, faFacebookF);
-library.add(faCircle, faTimes, faBars, faTachometerAlt, faShoppingCart, faGem, faChartLine, faGlobe, faBook, faCalendar, faFolder, faThumbtack, faPowerOff, faBarcode)
+library.add(faCircle, faTimes, faBars, faTachometerAlt, faShoppingCart, faGem, faChartLine, faGlobe, faBook, faCalendar, faFolder, faThumbtack, faPowerOff, faBarcode, faUser)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

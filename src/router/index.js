@@ -5,6 +5,7 @@ import Admin from '../views/Admin.vue'
 import Overview from '../views/Overview.vue'
 import AdminProducts from '../views/AdminProducts.vue'
 import Orders from '../views/Orders.vue'
+import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
 
@@ -50,6 +51,11 @@ const routes = [
         path: 'orders',
         name: 'orders',
         component: Orders
+      },
+      {
+        path: 'profile',
+        name: 'profile',
+        component: Profile
       }
     ]
   },
