@@ -42,6 +42,7 @@ import './assets/app.scss'
 
 // Vue.component('NavBar', require('./components/NavBar.vue').default)
 Vue.config.productionTip = false
+Vue.config.devtools = true
 
 let app = '';
 

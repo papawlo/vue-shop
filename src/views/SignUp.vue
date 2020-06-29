@@ -89,6 +89,16 @@ export default {
             })
             .then(() => {});
 
+          firebase
+            .collection("profiles")
+            .doc(data.user.uid)
+            .set({
+              name: this.name
+            })
+            .then(console.log("Document successfuly writen"))
+            .catch(err => {
+              console.error("ERROR ", err);
+            });
           this.$router.replace("admin");
         })
         .catch(function(error) {

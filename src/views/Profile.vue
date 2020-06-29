@@ -1,5 +1,5 @@
 <template>
-  <div class="products">
+  <div class="profile">
     <div class="container h-100">
       <div class="intro h-100">
         <div class="row h-100 align-items-center">
@@ -53,7 +53,6 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name
                       v-model="profile.name"
                       placeholder="Full name"
                       class="form-control"
@@ -96,7 +95,12 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="submit" value="Save Changes" class="btn btn-primary w-100" />
+                    <input
+                      type="submit"
+                      @click="updateProfile"
+                      value="Save Changes"
+                      class="btn btn-primary w-100"
+                    />
                   </div>
                 </div>
               </div>
@@ -174,7 +178,12 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="button" value="Reset password email" class="btn btn-success w-100" />
+                    <input
+                      type="button"
+                      @click="resetPassword"
+                      value="Reset password email"
+                      class="btn btn-success w-100"
+                    />
                   </div>
                 </div>
               </div>
@@ -188,6 +197,20 @@
 
 
 <script>
+import firebase from "firebase";
+import Swal from "sweetalert2";
+var db = firebase.firestore();
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  onOpen: toast => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  }
+});
 export default {
   name: "Profile",
   props: {
@@ -211,7 +234,61 @@ export default {
         uid: null
       }
     };
+  },
+  firestore() {
+    const user = firebase.auth().currentUser;
+    console.log(user);
+    return {
+      profile: db.collection("profiles").doc(user.uid)
+    };
+  },
+  methods: {
+    resetPassword() {
+      const auth = firebase.auth();
+      var emailAddress = auth.currentUser.email;
+      // console.log(currentUser);
+      console.log(emailAddress);
+
+      auth
+        .sendPasswordResetEmail(emailAddress)
+        .then(() => {
+          Toast.fire({
+            icon: "success",
+            title: "Email sent successfully"
+          });
+        })
+        .catch(error => {
+          console.error("error:", error);
+          Toast.fire({
+            icon: "error",
+            title: "Email not sent"
+          });
+        });
+    },
+    updateProfile() {
+      this.$firestore.profile.update(this.profile);
+
+      Toast.fire({
+        icon: "success",
+        title: "Profile updated successfully"
+      });
+    }
   }
+  // created() {
+  //   var user = firebase.auth().currentUser;
+
+  //   // var name, email, photoUrl, uid, emailVerified;
+
+  //   if (user != null) {
+  //     this.account.name = user.displayName;
+  //     this.account.email = user.email;
+  //     this.profile.photoUrl = user.photoURL;
+  //     this.profile.emailVerified = user.emailVerified;
+  //     this.profile.uid = user.uid; // The user's ID, unique to the Firebase project. Do NOT use
+  //     // this value to authenticate with your backend server, if
+  //     // you have one. Use User.getToken() instead.
+  //   }
+  // }
 };
 </script>
 

@@ -28,7 +28,7 @@
               {{name}}
               <strong>Smith</strong>
             </span>
-            <span class="user-role">Administrator</span>
+            <span class="user-role">{{email}}</span>
             <span class="user-status">
               <font-awesome-icon icon="circle" />
 
