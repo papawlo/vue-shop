@@ -12,13 +12,13 @@
           </div>
           <div class="col-md-6">
             <h3>Login</h3>
-            <form action="#" @submit.prevent="submit">
+            <form action="#" @submit.prevent="login">
               <div class="form-group">
                 <label for="email">Email address</label>
                 <input
                   type="email"
                   name="email"
-                  v-model="email"
+                  v-model.trim="email"
                   class="form-control"
                   id="email"
                   aria-describedby="emailHelp"
@@ -35,7 +35,7 @@
                 <input
                   type="password"
                   name="password"
-                  v-model="password"
+                  v-model.trim="password"
                   class="form-control"
                   id="password"
                   required
@@ -62,23 +62,33 @@
 <script>
 // @ is an alias to /src
 import NavBar from "@/components/NavBar.vue";
-import firebase from "firebase";
+// import { auth } from "../firebase";
 export default {
   name: "Login",
   data() {
-    return { email: null, password: null };
+    return {
+      loginForm: {
+        email: "",
+        password: ""
+      }
+    };
   },
   methods: {
-    submit() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          this.$router.replace({ name: "admin" });
-        })
-        .catch(err => {
-          this.error = err.message;
-        });
+    // login() {
+    //   auth
+    //     .signInWithEmailAndPassword(this.email, this.password)
+    //     .then(() => {
+    //       this.$router.replace({ name: "admin" });
+    //     })
+    //     .catch(err => {
+    //       this.error = err.message;
+    //     });
+    // }
+    login() {
+      this.$store.dispatch("login", {
+        email: this.loginForm.email,
+        password: this.loginForm.password
+      });
     }
   },
   components: {

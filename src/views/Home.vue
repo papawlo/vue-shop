@@ -6,7 +6,7 @@
 
     <main class="home">
       <Hero />
-      <products-list></products-list>
+      <product-list></product-list>
 
       <div class="container h-100">
         <div class="row p-5 h-100 justify-content-center align-items-center">
@@ -32,14 +32,14 @@
 // @ is an alias to /src
 import Hero from "@/components/Hero.vue";
 import NavBar from "@/components/NavBar.vue";
-import ProductsList from "@/sections/Products.vue";
+import ProductList from "@/sections/ProductList.vue";
 import Login from "@/components/LoginModal.vue";
 export default {
   name: "home",
   components: {
     Hero,
     NavBar,
-    ProductsList,
+    ProductList,
     Login
   }
 };

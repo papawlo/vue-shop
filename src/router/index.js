@@ -9,7 +9,7 @@ import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
 
-import firebase from "@/firebase";
+import { auth } from '../firebase'
 
 Vue.use(VueRouter)
 
@@ -78,14 +78,14 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
-  const currentUser = firebase.auth().currentUser
+  // const currentUser = auth.currentUser
 
   // console.log(requiresAuth);
   // console.log(currentUser);
 
-  if (requiresAuth && !currentUser) {
-    next('/')
-  } else if (requiresAuth && currentUser) {
+  if (requiresAuth && !auth.currentUser) {
+    next('/login')
+  } else if (requiresAuth && auth.currentUser) {
     next()
   } else {
     next()

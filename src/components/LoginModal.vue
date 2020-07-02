@@ -67,11 +67,11 @@
 
                   <!-- <div class="invalid-feedback" v-for="(error,i) in errors" :key="i">{{ error }}</div> -->
                   <div class="form-group">
-                    <label for="logEmail">Email address</label>
+                    <label for="loginForm-email">Email address</label>
                     <input
                       type="email"
-                      id="logEmail"
-                      v-model="logEmail"
+                      id="loginForm-email"
+                      v-model.trim="loginForm.email"
                       class="form-control"
                       aria-describedby="emailHelp"
                       placeholder="Enter email"
@@ -82,11 +82,11 @@
                     >We'll never share your email with anyone else.</small>
                   </div>
                   <div class="form-group">
-                    <label for="logPassword">Password</label>
+                    <label for="loginForm-password">Password</label>
                     <input
                       type="password"
-                      id="logPassword"
-                      v-model="logPassword"
+                      id="loginForm-password"
+                      v-model.trim="loginForm.password"
                       class="form-control"
                       placeholder="Password"
                       required
@@ -108,23 +108,23 @@
                 <h5 class="text-center">Create New Account</h5>
                 <form action="#" @submit.prevent="register">
                   <div class="form-group">
-                    <label for="name">Your name</label>
+                    <label for="signupForm-name">Your name</label>
                     <input
                       type="text"
                       class="form-control"
-                      id="regName"
-                      v-model="regName"
+                      id="signupForm-name"
+                      v-model="signupForm.name"
                       placeholder="Your nice name"
                       required
                     />
                   </div>
 
                   <div class="form-group">
-                    <label for="regEmail">Email address</label>
+                    <label for="signupForm-email">Email address</label>
                     <input
                       type="email"
-                      v-model="regEmail"
-                      id="regEmail"
+                      v-model="signupForm.email"
+                      id="signupForm-email"
                       class="form-control"
                       aria-describedby="emailHelp"
                       placeholder="Enter email"
@@ -132,11 +132,12 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="regPassword">Password</label>
+                    <label for="signupForm-password">Password</label>
                     <input
+                      v-model.trim="signupForm.password"
                       type="password"
                       class="form-control"
-                      id="regPassword"
+                      id="signupForm-password"
                       placeholder="Password"
                       required
                     />
@@ -163,11 +164,15 @@ export default {
   name: "LoginModal",
   data() {
     return {
-      regName: null,
-      regEmail: null,
-      regPassword: null,
-      logEmail: null,
-      logPassword: null,
+      loginForm: {
+        email: null,
+        password: null
+      },
+      signupForm: {
+        name: null,
+        email: null,
+        password: null
+      },
       hasError: false,
       logErrorMessage: false,
       errors: []
@@ -175,19 +180,19 @@ export default {
   },
   methods: {
     checkForm: function(e) {
-      if (this.logPassword && this.logEmail) {
+      if (this.loginForm.password && this.loginForm.email) {
         return true;
       }
 
       this.errors = [];
 
-      if (!this.logEmail) {
+      if (!this.loginForm.email) {
         this.errors.push("Email required.");
-      } else if (!this.validEmail(this.logEmail)) {
+      } else if (!this.validEmail(this.loginForm.email)) {
         this.errors.push("Valid email required.");
       }
 
-      if (!this.logPassword) {
+      if (!this.loginForm.password) {
         this.errors.push("Password required.");
       }
 
@@ -199,10 +204,13 @@ export default {
       e.preventDefault();
     },
     login() {
-      if (this.logEmail && this.logPassword) {
+      if (this.logEmail && this.loginForm.password) {
         firebase
           .auth()
-          .signInWithEmailAndPassword(this.logEmail, this.logPassword)
+          .signInWithEmailAndPassword(
+            this.loginForm.email,
+            this.loginForm.password
+          )
           .then(() => {
             jQuery("#m-login").modal("hide");
             this.$router.replace("admin");
@@ -229,11 +237,14 @@ export default {
     register() {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.regEmail, this.regPassword)
+        .createUserWithEmailAndPassword(
+          this.signupForm.email,
+          this.signupForm.password
+        )
         .then(data => {
           data.user
             .updateProfile({
-              displayName: this.regName
+              displayName: this.signupForm.name
             })
             .then(() => {});
         })
@@ -249,6 +260,21 @@ export default {
           console.log(error);
         });
     },
+
+    // login() {
+    //   this.$store.dispatch("login", {
+    //     email: this.loginForm.email,
+    //     password: this.loginForm.password
+    //   });
+    // },
+    // signup() {
+    //   this.$store.dispatch("signup", {
+    //     email: this.signupForm.email,
+    //     password: this.signupForm.password,
+    //     name: this.signupForm.name,
+    //     title: this.signupForm.title
+    //   });
+    // },
     validEmail: function(email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);

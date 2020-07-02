@@ -237,7 +237,7 @@ export default {
   },
   firestore() {
     const user = firebase.auth().currentUser;
-    console.log(user);
+    // console.log(user);
     return {
       profile: db.collection("profiles").doc(user.uid)
     };
@@ -247,7 +247,7 @@ export default {
       const auth = firebase.auth();
       var emailAddress = auth.currentUser.email;
       // console.log(currentUser);
-      console.log(emailAddress);
+      // console.log(emailAddress);
 
       auth
         .sendPasswordResetEmail(emailAddress)

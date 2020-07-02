@@ -57,31 +57,23 @@
             </li>
             <li>
               <router-link to="/admin/overview">
-                <i>
-                  <font-awesome-icon icon="tachometer-alt" />
-                </i>
-
-                <span class="menu-text">Overview</span>
-                <span class="badge badge-pill badge-warning">New</span>
+                <i class="fa fa-chart-line"></i>
+                <span>Overview</span>
               </router-link>
             </li>
             <li>
               <router-link to="/admin/products">
-                <i>
-                  <font-awesome-icon icon="barcode" />
-                </i>
-                <span class="menu-text">Products</span>
-                <span class="badge badge-pill badge-danger">3</span>
+                <i class="fab fa-amazon"></i>
+                <span>Products</span>
               </router-link>
             </li>
             <li>
-              <router-link to="orders">
-                <i>
-                  <font-awesome-icon icon="shopping-cart" />
-                </i>
-                <span class="menu-text">Orders</span>
+              <router-link to="/admin/orders">
+                <i class="fa fa-shopping-cart"></i>
+                <span>Orders</span>
               </router-link>
             </li>
+
             <li>
               <router-link to="/admin/profile">
                 <i>
@@ -267,7 +259,8 @@
 // import Products from "@/sections/Products.vue";
 // import Login from "@/components/Login.vue";
 
-import firebase from "@/firebase";
+// import firebase from "@/firebase";
+import { auth } from "../firebase";
 export default {
   name: "admin",
   components: {
@@ -292,8 +285,7 @@ export default {
       this.isPinned = !this.isPinned;
     },
     logout() {
-      firebase
-        .auth()
+      auth
         .signOut()
         .then(() => {
           this.$router.replace("/");
@@ -304,7 +296,7 @@ export default {
     }
   },
   created() {
-    let user = firebase.auth().currentUser;
+    let user = auth.currentUser;
 
     if (user != null) {
       this.name = user.displayName;

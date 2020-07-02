@@ -27,6 +27,9 @@
             <li class="nav-item">
               <router-link to="/about" class="nav-link" href="#">About</router-link>
             </li>
+            <li>
+              <a @click="logout()">logout</a>
+            </li>
           </ul>
           <a
             class="btn btn-primary mr-5 text-white"
@@ -62,6 +65,11 @@ export default {
   name: "NavBar",
   components: {
     // Login
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+    }
   }
 };
 </script>

@@ -69,7 +69,8 @@
 // @ is an alias to /src
 
 import NavBar from "@/components/NavBar.vue";
-import firebase from "@/firebase";
+// import firebase from "@/firebase";
+import { auth, usersCollection } from "../firebase";
 
 export default {
   name: "signUp",
@@ -78,9 +79,7 @@ export default {
   },
   methods: {
     register() {
-      firebase
-        .auth()
-
+      auth
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(data => {
           data.user
@@ -89,8 +88,7 @@ export default {
             })
             .then(() => {});
 
-          firebase
-            .collection("profiles")
+          usersCollection
             .doc(data.user.uid)
             .set({
               name: this.name
