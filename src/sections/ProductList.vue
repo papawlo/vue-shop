@@ -21,7 +21,12 @@
                 <h5 class="card-title">{{ product.name }}</h5>
                 <h5 class="card-price">{{ product.price | currency}}</h5>
               </div>
-              <a href="#" class="btn btn-primary">Add to Cart</a>
+              <add-to-cart
+                :p-id="product.id"
+                :price="product.price"
+                :name="product.name"
+                :image="getImage(product.images)"
+              ></add-to-cart>
             </div>
           </div>
         </div>
@@ -49,7 +54,10 @@ export default {
   },
   methods: {
     getImage(images) {
-      return images[0];
+      if (images) {
+        return images[0];
+      }
+      return;
     }
   },
   firestore() {

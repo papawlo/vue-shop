@@ -12,7 +12,8 @@ const store = new Vuex.Store({
             data: null
         },
         userProfile: {},
-        products: []
+        products: [],
+        cart: []
     },
     getters: {
         user(state) {
@@ -30,6 +31,16 @@ const store = new Vuex.Store({
 
         setUserProfile(state, val) {
             state.userProfile = val
+        },
+        addToCart(state, item) {
+            console.log(item)
+            let found = state.cart.find(product => product.product_id == item.product_id);
+
+            if (found) {
+                found.productQuantity++;
+            } else {
+                state.cart.push(item);
+            }
         }
     },
     actions: {

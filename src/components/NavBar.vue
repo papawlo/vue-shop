@@ -27,11 +27,14 @@
             <li class="nav-item">
               <router-link to="/about" class="nav-link" href="#">About</router-link>
             </li>
+            <li class="nav-item">
+              <router-link to="/checkout" class="nav-link">Checkout</router-link>
+            </li>
             <!-- <li class="nav-item">
               <a @click="logout" class="nav-link">logout</a>
             </li>-->
           </ul>
-          <form class="form-inline my-2 my-lg-0">
+          <!-- <form class="form-inline my-2 my-lg-0">
             <input
               class="form-control mr-sm-2"
               type="search"
@@ -39,14 +42,14 @@
               aria-label="Search"
             />
             <a class="btn btn-outline-success my-2 my-sm-0">Search</a>
-            <!-- <a
-              class="btn btn-outline-info border-0 mx-2 my-2 my-sm-0"
-              data-toggle="modal"
-              data-target="#miniCart"
-            >
-              <i class="fas fa-cart-plus"></i>
-            </a>-->
-          </form>
+          </form>-->
+          <a
+            class="btn btn-outline-info border-0 mx-2 my-2 my-sm-0"
+            data-toggle="modal"
+            data-target="#miniCart"
+          >
+            <i class="fas fa-cart-plus"></i>
+          </a>
           <ul class="navbar-nav ml-auto mr-3">
             <template v-if="user.loggedIn">
               <li class="nav-item dropdown">

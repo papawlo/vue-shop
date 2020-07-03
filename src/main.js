@@ -28,6 +28,12 @@ import 'bootstrap'
 import './assets/app.scss'
 
 // Vue.component('NavBar', require('./components/NavBar.vue').default)
+
+import AddToCart from './components/AddToCart'
+Vue.component('AddToCart', AddToCart);
+import MiniCart from './components/MiniCart'
+Vue.component('MiniCart', MiniCart);
+
 Vue.config.productionTip = false
 Vue.config.devtools = true
 

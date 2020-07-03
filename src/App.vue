@@ -22,4 +22,8 @@
     }
   }
 }
+main {
+  margin-top: 24px;
+  padding: 20px;
+}
 </style>
