@@ -27,16 +27,10 @@
             <li class="nav-item">
               <router-link to="/about" class="nav-link" href="#">About</router-link>
             </li>
-            <li>
-              <a @click="logout()">logout</a>
-            </li>
+            <!-- <li class="nav-item">
+              <a @click="logout" class="nav-link">logout</a>
+            </li>-->
           </ul>
-          <a
-            class="btn btn-primary mr-5 text-white"
-            data-toggle="modal"
-            data-target="#m-login"
-          >Login</a>
-
           <form class="form-inline my-2 my-lg-0">
             <input
               class="form-control mr-sm-2"
@@ -44,7 +38,7 @@
               placeholder="Search"
               aria-label="Search"
             />
-            <a class="btn btn-outline-success my-2 my-sm-0">Get Start</a>
+            <a class="btn btn-outline-success my-2 my-sm-0">Search</a>
             <!-- <a
               class="btn btn-outline-info border-0 mx-2 my-2 my-sm-0"
               data-toggle="modal"
@@ -53,6 +47,32 @@
               <i class="fas fa-cart-plus"></i>
             </a>-->
           </form>
+          <ul class="navbar-nav ml-auto mr-3">
+            <template v-if="user.loggedIn">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >{{userProfile.name}}</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="nav-link" @click.prevent="logout" href="#">Logout</a>
+                </div>
+              </li>
+            </template>
+            <template v-else>
+              <li class="nav-item">
+                <router-link to="login" class="nav-link">Login</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="sign-up" class="nav-link">Register</router-link>
+              </li>
+            </template>
+          </ul>
         </div>
       </div>
     </nav>
@@ -61,6 +81,8 @@
 
 <script>
 // import Login from "@/components/Login.vue";
+
+import { mapGetters } from "vuex";
 export default {
   name: "NavBar",
   components: {
@@ -70,6 +92,13 @@ export default {
     logout() {
       this.$store.dispatch("logout");
     }
+  },
+  computed: {
+    // map `this.user` to `this.$store.getters.user`
+    ...mapGetters({
+      user: "user",
+      userProfile: "userProfile"
+    })
   }
 };
 </script>

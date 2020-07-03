@@ -18,7 +18,7 @@
                 <input
                   type="email"
                   name="email"
-                  v-model.trim="email"
+                  v-model.trim="loginForm.email"
                   class="form-control"
                   id="email"
                   aria-describedby="emailHelp"
@@ -35,7 +35,7 @@
                 <input
                   type="password"
                   name="password"
-                  v-model.trim="password"
+                  v-model.trim="loginForm.password"
                   class="form-control"
                   id="password"
                   required

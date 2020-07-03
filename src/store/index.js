@@ -7,10 +7,27 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
+        user: {
+            loggedIn: false,
+            data: null
+        },
         userProfile: {},
         products: []
     },
+    getters: {
+        user(state) {
+            return state.user
+        },
+        userProfile(state) {
+            return state.userProfile
+        },
+
+    },
     mutations: {
+        SET_LOGGED_IN(state, value) {
+            state.user.loggedIn = value;
+        },
+
         setUserProfile(state, val) {
             state.userProfile = val
         }
@@ -26,11 +43,17 @@ const store = new Vuex.Store({
         async fetchUserProfile({ commit }, user) {
             // fetch user profile
             const userProfile = await fb.usersCollection.doc(user.uid).get()
+            console.log('user:', user)
+            console.log('userprofile', userProfile)
 
             // set user profile in state
-            commit('setUserProfile', userProfile.data())
+            if (user) {
+                commit("SET_LOGGED_IN", user !== null)
+                commit('setUserProfile', userProfile.data())
+            } else {
+                commit("SET_USER", null);
+            }
 
-            // change route to dashboard
             // change route to dashboard
             if (router.currentRoute.path === '/login') {
                 router.push('/admin')

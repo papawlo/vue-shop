@@ -13,14 +13,15 @@
               </carousel>
             </div>
             <div v-else>
-              <img src="https://placehold.it/400" class="w-100" />
+              <img src="https://placehold.it/400x200" class="w-100" />
             </div>
 
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title">{{ product.name }}</h5>
-                <h5 class="card-priceS">{{ product.price }}</h5>
+                <h5 class="card-price">{{ product.price | currency}}</h5>
               </div>
+              <a href="#" class="btn btn-primary">Add to Cart</a>
             </div>
           </div>
         </div>

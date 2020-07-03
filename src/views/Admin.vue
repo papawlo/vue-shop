@@ -4,18 +4,18 @@
     :class="{'toggled':isOpen, '':!isOpen, 'pinned':isPinned, '':!isPinned}"
   >
     <a href="#" id="show-sidebar" class="btn btn-sm bt-dark" @click="toggle">
-      <font-awesome-icon icon="bars" />
+      <i class="fas fa-bars"></i>
     </a>
     <nav id="sidebar" class="sidebar-wrapper">
       <div class="sidebar-content">
         <!-- sidebar-brand  -->
         <div class="sidebar-item sidebar-brand">
-          <a href="#">pro sidebar</a>
+          <a href="#">VueShop</a>
           <div id="close-sidebar">
-            <font-awesome-icon icon="times" @click="toggle" />
+            <i class="fas fa-times" @click="toggle"></i>
           </div>
           <div id="pin-sidebar">
-            <font-awesome-icon icon="thumbtack" @click="pin" />
+            <i class="fas fa-thumbtack" @click="pin"></i>
           </div>
         </div>
         <!-- sidebar-header  -->
@@ -30,8 +30,7 @@
             </span>
             <span class="user-role">{{email}}</span>
             <span class="user-status">
-              <font-awesome-icon icon="circle" />
-
+              <i class="fa fa-circle"></i>
               <span>Online</span>
             </span>
           </div>
@@ -76,20 +75,16 @@
 
             <li>
               <router-link to="/admin/profile">
-                <i>
-                  <font-awesome-icon icon="user" />
-                </i>
+                <i class="fa fa-user"></i>
                 <span class="menu-text">Profile</span>
               </router-link>
             </li>
 
             <li>
-              <button type="button" @click="logout">
-                <i>
-                  <font-awesome-icon icon="power-off" />
-                </i>
+              <a type="button" @click="logout">
+                <i class="fa fa-power-off"></i>
                 <span class="menu-text">Logout</span>
-              </button>
+              </a>
             </li>
           </ul>
         </div>
