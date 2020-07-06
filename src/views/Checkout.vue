@@ -33,6 +33,7 @@
       </div>
     </main>
     <login></login>
+    <mini-cart></mini-cart>
   </div>
 </template>
 

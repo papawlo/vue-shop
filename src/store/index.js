@@ -4,6 +4,7 @@ import * as fb from '../firebase'
 import router from '../router/index'
 
 Vue.use(Vuex)
+let cart = window.localStorage.getItem('cart');
 
 const store = new Vuex.Store({
     state: {
@@ -13,7 +14,7 @@ const store = new Vuex.Store({
         },
         userProfile: {},
         products: [],
-        cart: []
+        cart: cart ? JSON.parse(cart) : []
     },
     getters: {
         user(state) {
@@ -33,7 +34,7 @@ const store = new Vuex.Store({
             state.userProfile = val
         },
         addToCart(state, item) {
-            console.log(item)
+
             let found = state.cart.find(product => product.product_id == item.product_id);
 
             if (found) {
@@ -41,6 +42,16 @@ const store = new Vuex.Store({
             } else {
                 state.cart.push(item);
             }
+
+            this.commit('saveData');
+        },
+        removeFromCart(state, item) {
+            let selectedItemIndex = state.cart.indexOf(item);
+            state.cart.splice(selectedItemIndex, 1)
+            this.commit('saveData');
+        },
+        saveData(state) {
+            window.localStorage.setItem('cart', JSON.stringify(state.cart))
         }
     },
     actions: {
