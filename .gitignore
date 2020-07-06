@@ -1,14 +1,15 @@
 .DS_Store
 node_modules
 /dist
-.history
+src/firebase.js
 resources
+.history
 .firebase
 
 # local env files
 .env.local
 .env.*.local
-/scr/firebase.js
+
 
 # Log files
 npm-debug.log*
